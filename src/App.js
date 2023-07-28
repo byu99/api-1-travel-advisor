@@ -9,7 +9,7 @@ import Map from "./components/Map/Map";
 const App = () => {
     const [places, setPlaces] = useState([]);
     const [coordinates, setCoordinates] = useState({});
-    const [bounds, setBounds] = useState(null);
+    const [bounds, setBounds] = useState({});
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
@@ -20,11 +20,9 @@ const App = () => {
     }, []);
 
     useEffect(() => {
-        if (bounds) {
-            getPlacesData(bounds.sw, bounds.ne).then((data) => {
-                setPlaces(data);
-            });
-        }
+        getPlacesData(bounds.sw, bounds.ne).then((data) => {
+            setPlaces(data);
+        });
     }, [coordinates, bounds]);
 
     return (
@@ -40,6 +38,7 @@ const App = () => {
                         setCoordinates={setCoordinates}
                         setBounds={setBounds}
                         coordinates={coordinates}
+                        places={places}
                     />
                 </Grid>
             </Grid>

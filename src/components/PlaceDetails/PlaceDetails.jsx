@@ -47,6 +47,7 @@ const PlaceDetails = ({ place }) => {
                         {place.ranking}
                     </Typography>
                 </Box>
+
                 {place?.awards?.map((award) => (
                     <Box my={1} display="flex" justifyContent="space-between">
                         <img
@@ -58,6 +59,54 @@ const PlaceDetails = ({ place }) => {
                         </Typography>
                     </Box>
                 ))}
+
+                {place?.cuisine?.map(({ name }) => (
+                    <Chip
+                        key={name}
+                        size="small"
+                        label={name}
+                        className={classes.chip}
+                    />
+                ))}
+
+                {place?.address && (
+                    <Typography
+                        gutterBottom
+                        variant="subtitle2"
+                        color="textSecondary"
+                        className={classes.subtitle}
+                    >
+                        <LocationOnIcon /> {place.address}
+                    </Typography>
+                )}
+
+                {place?.phone && (
+                    <Typography
+                        gutterBottom
+                        variant="subtitle2"
+                        color="textSecondary"
+                        className={classes.spacing}
+                    >
+                        <PhoneIcon /> {place.phone}
+                    </Typography>
+                )}
+
+                <CardActions>
+                    <Button
+                        size="small"
+                        color="primary"
+                        onClick={() => window.open(place.web_url, "_blank")}
+                    >
+                        Trip Advisor
+                    </Button>
+                    <Button
+                        size="small"
+                        color="primary"
+                        onClick={() => window.open(place.website, "_blank")}
+                    >
+                        Website
+                    </Button>
+                </CardActions>
             </CardContent>
         </Card>
     );

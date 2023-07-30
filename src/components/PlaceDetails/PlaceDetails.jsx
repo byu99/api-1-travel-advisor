@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, forwardRef } from "react";
 import {
     Box,
     Typography,
@@ -15,9 +15,16 @@ import Rating from "@material-ui/lab/Rating";
 
 import useStyles from "./styles";
 
-const PlaceDetails = ({ place }) => {
+const PlaceDetails = forwardRef(({ place, selected }, refProp) => {
     const classes = useStyles();
-    console.log(place);
+
+    useEffect(() => {
+        if (selected)
+            refProp?.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+    }, [selected, refProp]);
 
     return (
         <Card elevation={6}>
@@ -35,12 +42,21 @@ const PlaceDetails = ({ place }) => {
                 <Typography gutterBottom variant="h5">
                     {place.name}
                 </Typography>
+
+                <Box display="flex" justifyContent="space-between">
+                    <Rating value={Number(place.rating)} readOnly />
+                    <Typography gutterBottom variant="subtitle1">
+                        out of {place.num_reviews} reviews
+                    </Typography>
+                </Box>
+
                 <Box display="flex" justifyContent="space-between">
                     <Typography variant="subtitle1">Price</Typography>
                     <Typography gutterBottom variant="subtitle1">
                         {place.price_level}
                     </Typography>
                 </Box>
+
                 <Box display="flex" justifyContent="space-between">
                     <Typography variant="subtitle1">Ranking</Typography>
                     <Typography gutterBottom variant="subtitle1">
@@ -110,6 +126,6 @@ const PlaceDetails = ({ place }) => {
             </CardContent>
         </Card>
     );
-};
+});
 
 export default PlaceDetails;
